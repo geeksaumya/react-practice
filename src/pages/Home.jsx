@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 function Home() {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the Employee Management App.</p>
+    <div style={{ padding: "20px" }}>
+      <h1>Home</h1>
+
+      <button onClick={() => navigate("/employees")}>
+        Go to Employees
+      </button>
     </div>
   );
 }
