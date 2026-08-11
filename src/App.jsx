@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+
+import Signup from "./components/Signup"
 
 import Navbar from "./components/Navbar";
 
@@ -9,6 +11,9 @@ import About from "./pages/About";
 function App() {
   return (
     <BrowserRouter>
+
+      <Signup />
+
       <Navbar />
 
       <Routes>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "../App.css";
 import employeesData from "../data/employees.json";
+import EmployeeCard from "../components/EmployeeCard";
 
 function Employees() {
   const { id } = useParams();
@@ -78,66 +78,65 @@ function Employees() {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Employee Manager</h1>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-3xl mx-auto">
+      <h1 className="text-4xl font-bold text-center text-blue-700 mb-8"> Employee Manager </h1>
 
-      {id && <h3>Employee ID from URL: {id}</h3>}
+      {id && (
+        <p className="text-center text-gray-600 mb-6">
+          Employee ID : {id}
+        </p>
+      )}
 
+    <div className="bg-white shadow-lg rounded-xl p-6 mb-8">
       <input
+        className="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         type="text"
         placeholder="Enter Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <br />
-      <br />
-
       <input
+        className="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         type="text"
         placeholder="Enter Role"
         value={role}
         onChange={(e) => setRole(e.target.value)}
       />
 
-      <br />
-      <br />
-
-      {editId === null ? (
-        <button onClick={addEmployee}>Add Employee</button>
-      ) : (
-        <button onClick={updateEmployee}>Update Employee</button>
-      )}
-
-      <hr />
-
-      <h2>Employee List</h2>
-
-      {employeeList.map((employee) => (
-        <div
-          key={employee.id}
-          style={{
-            border: "1px solid gray",
-            padding: "10px",
-            marginBottom: "10px",
-          }}
+      <div className="flex justify-center">
+        {editId === null ? (
+        <button
+          onClick={addEmployee}
+          className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition"
         >
-          <h3>{employee.name}</h3>
+          Add Employee
+        </button>
+      ) : (
+        <button
+          onClick={updateEmployee}
+          className="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition"
+        >
+          Update Employee
+        </button>
+      )}
+      </div>
+    </div>
+      <hr className="my-8" />
 
-          <p>{employee.role}</p>
+      <h2 className="text-2xl font-semibold mb-4">Employee List</h2>
 
-          <button onClick={() => editEmployee(employee)}>
-            Edit
-          </button>
-
-          <button
-            onClick={() => deleteEmployee(employee.id)}
-            style={{ marginLeft: "10px" }}
-          >
-            Delete
-          </button>
-        </div>
+      <div className="space-y-4">{employeeList.map((employee) => (
+        <EmployeeCard
+          key={employee.id}
+          employee={employee}
+          editEmployee={editEmployee}
+          deleteEmployee={deleteEmployee}
+        />
       ))}
+      </div>
+    </div>
     </div>
   );
 }
