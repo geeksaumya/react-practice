@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Signup from "./components/Signup"
 
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import Employees from "./pages/Employees";
@@ -12,12 +12,12 @@ function App() {
   return (
     <BrowserRouter>
 
-      <Signup />
-
-      <Navbar />
+      
+{/* <Navbar /> */}
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/employees/:id" element={<Employees />} />
         <Route path="/about" element={<About />} />

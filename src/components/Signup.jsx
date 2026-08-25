@@ -1,28 +1,61 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function Signup() {
-    const [formData, setFormData] = 
-        useState({
-        name: "",
-        phone: "",
-        email: "",
-        password: ""
-        })
-    ;
+
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     const [error, setError] = useState("")
     function submitButton() {
-        if (formData.name === "") {
+
+
+        if (name === "") {
             setError("Name is required")
-        } else if (formData.phone === "") {
+        } else if (phone === "") {
             setError("Phone number is required")
-        } else if (formData.email === "") {
+        } else if (email === "") {
             setError("Email is required")
-        } else if (formData.password === "") {
+        } else if (password === "") {
             setError("Password is required")
         } else {
             setError("")
-            console.log(formData)
+            const newUser = {
+                name: name,
+                phone: phone,
+                email: email,
+                password: password
+            }
+
+            fetch("http://localhost:5001/employees", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newUser)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Saved:", data);
+
+                setName("");
+                setPhone("");
+                setEmail("");
+                setPassword("");
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+            
+            setName("")
+            setPhone("")
+            setEmail("")
+            setPassword("")
+            
+            console.log(newUser)
         }
+        
     }
         return (
         <div className="signup-container">
@@ -35,12 +68,9 @@ function Signup() {
                 <label>Name</label>
                 <input
                     type="text"
-                    value={formData.name}
+                    value={name}
                     onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            name: e.target.value
-                        })
+                        setName(e.target.value)
                     }
                 />
             </div>
@@ -49,12 +79,9 @@ function Signup() {
                 <label>Phone Number</label>
                 <input
                     type="tel"
-                    value={formData.phone}
+                    value={phone}
                     onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            phone: e.target.value
-                        })
+                        setPhone(e.target.value)
                     }
                 />
             </div>
@@ -63,12 +90,9 @@ function Signup() {
                 <label>Email</label>
                 <input
                     type="email"
-                    value={formData.email}
+                    value={email}
                     onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            email: e.target.value
-                        })
+                        setEmail(e.target.value)
                     }
                 />
             </div>
@@ -77,12 +101,9 @@ function Signup() {
                 <label>Password</label>
                 <input
                     type="password"
-                    value={formData.password}
+                    value={password}
                     onChange={(e) =>
-                        setFormData({
-                            ...formData,
-                            password: e.target.value
-                        })
+                        setPassword(e.target.value)
                     }
                 />
             </div>
