@@ -1,0 +1,80 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+function Login(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [error, setError] = useState("")
+    const [loginSuccess, setLoginSuccess] = useState(false);
+    function submitButton() {
+        
+        if (email === "") {
+            setError("Email is required")
+        } else if (password === "") {
+            setError("Password is required")
+        } else {
+            setError("")
+
+            fetch("http://localhost:5001/employees")
+                .then((response) => response.json())
+                .then((data) => {
+
+                    const user = data.find((employee) =>
+                        employee.email === email &&
+                        employee.password === password
+                    );
+
+                    if (user) {
+                        console.log("Login successful:", user);
+                        setLoginSuccess(true);
+                    } else {
+                        setError("User not found. Please create user first.");
+                    }
+
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    }
+
+        return (
+        <div className="login-container">
+
+            <h1>Login</h1>
+
+            {error && <p className="error">{error}</p>}
+
+            <div className="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) =>
+                        setEmail(e.target.value)
+                    }
+                />
+            </div>
+
+            <div className="form-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) =>
+                        setPassword(e.target.value)
+                    }
+                />
+            </div>
+
+            <button onClick={submitButton}>
+                Login
+            </button>
+            {loginSuccess && <Link to="/">Go to Home</Link>}
+            {error && <Link to="/signup">Create User</Link>}
+        </div>
+    )
+}    
+
+export default Login

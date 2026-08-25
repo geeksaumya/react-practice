@@ -10,7 +10,6 @@ function Signup() {
     const [error, setError] = useState("")
     function submitButton() {
 
-
         if (name === "") {
             setError("Name is required")
         } else if (phone === "") {
@@ -47,7 +46,7 @@ function Signup() {
             .catch((error) => {
                 console.error("Error:", error);
             });
-            
+
             setName("")
             setPhone("")
             setEmail("")
