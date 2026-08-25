@@ -27,7 +27,7 @@ function Signup() {
                 password: password
             }
 
-            fetch("http://localhost:5001/employees", {
+            fetch("https://react-backend-alpp.onrender.com/employees", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
