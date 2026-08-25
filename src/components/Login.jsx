@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [error, setError] = useState("")
-    const [loginSuccess, setLoginSuccess] = useState(false);
+    const navigate = useNavigate();
     function submitButton() {
         
         if (email === "") {
@@ -27,7 +27,7 @@ function Login(){
 
                     if (user) {
                         console.log("Login successful:", user);
-                        setLoginSuccess(true);
+                        navigate("/");
                     } else {
                         setError("User not found. Please create user first.");
                     }
@@ -42,7 +42,7 @@ function Login(){
         return (
         <div className="login-container">
 
-            <h1>Login</h1>
+            <h1>Login Page</h1>
 
             {error && <p className="error">{error}</p>}
 
@@ -71,8 +71,7 @@ function Login(){
             <button onClick={submitButton}>
                 Login
             </button>
-            {loginSuccess && <Link to="/">Go to Home</Link>}
-            {error && <Link to="/signup">Create User</Link>}
+            {error && <Link to="/signup">Sign Up</Link>}
         </div>
     )
 }    
